@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee Animation</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #F5E6D3;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+    }
+
+    .animation-container {
+      position: relative;
+      width: 300px;
+      height: 300px;
+    }
+
+    /* Coffee Ring */
+    .coffee-ring {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border: 8px solid #8B4513;
+      border-radius: 50%;
+      top: 50px;
+      left: 50px;
+      opacity: 0;
+      animation: ringAppear 1.5s ease-out forwards;
+    }
+
+    @keyframes ringAppear {
+      0% { opacity: 0; transform: scale(0.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Coffee Particles */
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: #8B4513;
+      border-radius: 50%;
+      animation: particleFall 1s ease-out forwards;
+    }
+
+    @keyframes particleFall {
+      0% { opacity: 0; transform: translateY(-20px); }
+      50% { opacity: 1; }
+      100% { opacity: 0.8; }
+    }
+
+    /* Wind Effect - Blow Away */
+    .wind-blow {
+      animation: windBlow 1.5s 1.5s ease-out forwards;
+    }
+
+    @keyframes windBlow {
+      0% { transform: translateX(0); opacity: 1; }
+      100% { transform: translateX(150px); opacity: 0; }
+    }
+
+    /* Gold Transformation */
+    .gold-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #FFD700;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #FFA500;
+      animation: goldRise 1.5s 3s ease-out forwards;
+    }
+
+    @keyframes goldRise {
+      0% { 
+        opacity: 0; 
+        transform: translateY(0) scale(1); 
+      }
+      50% { 
+        opacity: 1; 
+        transform: translateY(-50px) scale(1.2); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translateY(-100px) scale(0.5); 
+      }
+    }
+
+    /* Final Zoom Particle */
+    .zoom-particle {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: radial-gradient(circle, #FFD700, #FFA500);
+      border-radius: 50%;
+      top: 150px;
+      left: 150px;
+      opacity: 0;
+      animation: zoomIn 1s 4s ease-out forwards;
+    }
+
+    @keyframes zoomIn {
+      0% { 
+        opacity: 0; 
+        transform: scale(1); 
+      }
+      50% { 
+        opacity: 1; 
+        transform: scale(3); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: scale(10); 
+        filter: brightness(3);
+      }
+    }
+
+    /* Loading text (optional) */
+    .loading-text {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      color: #8B4513;
+      font-size: 14px;
+      opacity: 0;
+      animation: fadeText 1s 0.5s ease-in forwards;
+    }
+
+    @keyframes fadeText {
+      to { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+  <div class="animation-container">
+    <!-- Coffee Ring -->
+    <div class="coffee-ring wind-blow"></div>
+
+    <!-- Coffee Particles (scattered around ring) -->
+    <div class="particle wind-blow" style="top: 60px; left: 100px; animation-delay: 0.1s;"></div>
+    <div class="particle wind-blow" style="top: 80px; left: 180px; animation-delay: 0.2s;"></div>
+    <div class="particle wind-blow" style="top: 140px; left: 40px; animation-delay: 0.15s;"></div>
+    <div class="particle wind-blow" style="top: 200px; left: 120px; animation-delay: 0.25s;"></div>
+    <div class="particle wind-blow" style="top: 220px; left: 200px; animation-delay: 0.3s;"></div>
+    <div class="particle wind-blow" style="top: 100px; left: 250px; animation-delay: 0.12s;"></div>
+
+    <!-- Gold Particles (appear after wind) -->
+    <div class="gold-particle" style="top: 120px; left: 140px;"></div>
+    <div class="gold-particle" style="top: 160px; left: 100px; animation-delay: 3.1s;"></div>
+    <div class="gold-particle" style="top: 180px; left: 180px; animation-delay: 3.2s;"></div>
+
+    <!-- Final Zoom Particle -->
+    <div class="zoom-particle"></div>
+
+    <!-- Optional Loading Text -->
+    <div class="loading-text">Brewing your experience...</div>
+  </div>
+
+  <script>
+    // After 5 seconds, notify Adalo (if in WebView)
+    setTimeout(() => {
+      if (window.parent) {
+        window.parent.postMessage('animation_complete', '*');
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
